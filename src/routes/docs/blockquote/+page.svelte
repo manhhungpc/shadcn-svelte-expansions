@@ -1,14 +1,11 @@
 <script lang="ts">
-	import { cn } from '$lib/utils.js';
-
-	export let twClass: string;
+	import Blockquote from '$lib/components/customize/Blockquote.svelte';
 </script>
 
-<div
-	class={cn(
-		"relative rounded-lg border-l-8 border-l-gray-700 bg-gray-100 py-5 pl-16 pr-5 font-sans text-lg italic leading-relaxed text-gray-500 before:absolute before:left-3 before:top-3 before:font-serif before:text-6xl before:text-gray-700 before:content-['“']",
-		twClass
-	)}
->
-	<slot />
+<div>
+	<Blockquote author="Jeff Atwood">
+		<p>
+			Any application that can be written in JavaScript, will eventually be written in JavaScript
+		</p>
+	</Blockquote>
 </div>

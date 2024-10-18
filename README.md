@@ -9,3 +9,4 @@ List of expand components:
 - Code Blocks **(priority)**
 - Heading With Anchor **(priority)**
 - Floating Label Input **(priority)**
+- Stepper
