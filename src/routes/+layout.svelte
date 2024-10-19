@@ -5,7 +5,7 @@
 </script>
 
 <ModeWatcher />
-<div class="mx-6 mt-4 flex justify-between py-1">
+<div class="mx-0 mt-4 flex justify-between border-b border-b-stone-500 px-6 py-1">
 	<a href="/">LOGO</a>
 	<div class="">
 		<a href="/docs" class="mr-4 bg-stone-300 px-3 py-1 dark:bg-stone-600">Docs</a>
@@ -17,6 +17,18 @@
 		</Button>
 	</div>
 </div>
-<div class="mx-6">
+<div class="mx-20 mt-3">
 	<slot />
 </div>
+
+<style>
+	:global(::-webkit-scrollbar) {
+		width: 8px;
+		background-color: #1f1f1f;
+	}
+
+	:global(::-webkit-scrollbar-thumb) {
+		background-color: #444;
+		border-radius: 4px;
+	}
+</style>
