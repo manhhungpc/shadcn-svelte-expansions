@@ -20,3 +20,11 @@ type InputTypes = | 'button'
 | 'time'
 | 'url'
 | 'week'
+
+type PropDisplay = {
+    name: string;
+    type: string;
+    default: string;
+    description: string;
+    is_require?: boolean
+}

@@ -57,6 +57,10 @@ const config: Config = {
 			fontFamily: {
 				sans: [...fontFamily.sans]
 			}
+		},
+		fontFamily: {
+			...fontFamily,
+			"jetbrain-mono": ["JetBrains Mono", "monospace"]
 		}
 	},
 };

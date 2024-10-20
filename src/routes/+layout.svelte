@@ -2,11 +2,19 @@
 	import '../app.css';
 	import { ModeWatcher, toggleMode } from 'mode-watcher';
 	import { Button } from '$lib/components/ui/button/index.js';
+	import logoSvg from '$assets/logo.svg';
 </script>
+
+<svelte:head>
+	<title>Shadcn Svelte Expansion</title>
+</svelte:head>
 
 <ModeWatcher />
 <div class="mx-0 mt-4 flex justify-between border-b border-b-stone-500 px-6 py-1">
-	<a href="/">LOGO</a>
+	<a href="/" class="flex flex-row items-start gap-2">
+		<img src={logoSvg} alt="logo" height="24" width="24" />
+		<span class="text-lg font-bold">shadcn-svelte-expansions</span>
+	</a>
 	<div class="">
 		<a href="/docs" class="mr-4 bg-stone-300 px-3 py-1 dark:bg-stone-600">Docs</a>
 
@@ -22,6 +30,7 @@
 </div>
 
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 	:global(::-webkit-scrollbar) {
 		width: 8px;
 		background-color: #1f1f1f;

@@ -1,8 +1,30 @@
 <script lang="ts">
 	import Usage from './Usage.svelte';
 	import usageRawCode from './usage.svelte?raw';
-	import TabPreviewCode from '$lib/components/customize/TabPreviewCode.svelte';
+	import blockquoteRawCode from '$lib/components/customize/Blockquote.svelte?raw';
+	import TabPreviewCode from '$lib/components/common/TabPreviewCode.svelte';
 	import StepBlock from '$lib/components/customize/StepBlock.svelte';
+	import HighlightCode from '$lib/components/common/HighlightCode.svelte';
+	import PropsDisplay from '$lib/components/common/PropsDisplay.svelte';
+
+	const data: PropDisplay[] = [
+		{
+			name: 'contentClass',
+			type: 'string',
+			default: '-',
+			description: 'Tailwind class for content block'
+		},
+		{
+			name: 'authorClass',
+			type: 'string',
+			default: '-',
+			description: 'Tailwind class for author name'
+		}
+	];
+	let slotDocs = [
+		{ code: '<slot name="content"/>', description: 'Display content' },
+		{ code: '<slot name="author"/>', description: "Display author's name" }
+	];
 </script>
 
 <div class="mb-20">
@@ -13,16 +35,18 @@
 	</TabPreviewCode>
 
 	<h3 class="mt-10 text-2xl font-bold">Installation</h3>
+	<p class="my-3 rounded-md bg-primary-foreground px-5 py-4">
+		Set up
+		<a href="https://www.shadcn-svelte.com/docs/installation" class="text-[#EA4F27] underline">
+			shadcn-svelte
+		</a>
+		if you haven't
+	</p>
 	<div class="my-3">
 		<StepBlock step={1}>
 			<div slot="label">Copy this code</div>
 			<div slot="content">
-				<p>Some content</p>
-				<p>Some content</p>
-				<p>Some content</p>
-				<p>Some content</p>
-				<p>Some content</p>
-				<p>Some content</p>
+				<HighlightCode rawCode={blockquoteRawCode} />
 			</div>
 		</StepBlock>
 		<StepBlock step={2}>
@@ -30,6 +54,16 @@
 		</StepBlock>
 	</div>
 
-	<h3 class="mt-10 text-2xl font-bold">Props</h3>
-	<p>Some text here</p>
+	<h3 class="mb-3 mt-10 text-2xl font-bold">Props</h3>
+	<PropsDisplay {data} />
+
+	<h3 class="mb-3 mt-10 text-2xl font-bold">Slots</h3>
+	{#each slotDocs as doc}
+		<div class="my-5">
+			<span class="font-jetbrain-mono w-max rounded-md bg-[#27272A] px-2 py-1 text-sm font-bold">
+				{doc.code}
+			</span>
+			<span>: {doc.description}</span>
+		</div>
+	{/each}
 </div>
