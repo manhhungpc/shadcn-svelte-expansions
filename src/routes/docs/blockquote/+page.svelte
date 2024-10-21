@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Usage from './Usage.svelte';
-	import usageRawCode from './usage.svelte?raw';
+	import BlockquoteUsage from './blockquote-usage.svelte';
+	import usageRawCode from './blockquote-usage.svelte?raw';
 	import blockquoteRawCode from '$lib/components/customize/Blockquote.svelte?raw';
 	import TabPreviewCode from '$lib/components/common/TabPreviewCode.svelte';
 	import StepBlock from '$lib/components/customize/StepBlock.svelte';
@@ -12,18 +12,18 @@
 			name: 'contentClass',
 			type: 'string',
 			default: '-',
-			description: 'Tailwind class for content block'
+			description: 'Additional classes to style the content block'
 		},
 		{
 			name: 'authorClass',
 			type: 'string',
 			default: '-',
-			description: 'Tailwind class for author name'
+			description: 'Additional classes to style the author name'
 		}
 	];
 	let slotDocs = [
-		{ code: '<slot name="content"/>', description: 'Display content' },
-		{ code: '<slot name="author"/>', description: "Display author's name" }
+		{ code: '<slot name="content">', description: 'Display content' },
+		{ code: '<slot name="author">', description: "Display author's name" }
 	];
 </script>
 
@@ -31,7 +31,7 @@
 	<h1 class="mb-5 text-4xl font-bold">Blockquote</h1>
 	<h3 class="text-2xl">Display a quote or a component that looks like a quote.</h3>
 	<TabPreviewCode rawCode={usageRawCode}>
-		<Usage />
+		<BlockquoteUsage />
 	</TabPreviewCode>
 
 	<h3 class="mt-10 text-2xl font-bold">Installation</h3>
@@ -60,7 +60,7 @@
 	<h3 class="mb-3 mt-10 text-2xl font-bold">Slots</h3>
 	{#each slotDocs as doc}
 		<div class="my-5">
-			<span class="font-jetbrain-mono w-max rounded-md bg-[#27272A] px-2 py-1 text-sm font-bold">
+			<span class="w-max rounded-md bg-muted px-2 py-1 font-jetbrain-mono text-sm font-bold">
 				{doc.code}
 			</span>
 			<span>: {doc.description}</span>

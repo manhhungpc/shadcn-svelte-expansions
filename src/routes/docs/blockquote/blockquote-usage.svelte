@@ -2,7 +2,7 @@
 	import Blockquote from '$lib/components/customize/Blockquote.svelte';
 </script>
 
-<Blockquote contentClass="">
+<Blockquote>
 	<p slot="content">
 		Any application that can be written in JavaScript, will eventually be written in JavaScript
 	</p>
