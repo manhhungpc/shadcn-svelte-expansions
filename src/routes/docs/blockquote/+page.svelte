@@ -12,18 +12,18 @@
 			name: 'contentClass',
 			type: 'string',
 			default: '-',
-			description: 'Tailwind class for content block'
+			description: 'Additional classes to style the content block'
 		},
 		{
 			name: 'authorClass',
 			type: 'string',
 			default: '-',
-			description: 'Tailwind class for author name'
+			description: 'Additional classes to style the author name'
 		}
 	];
 	let slotDocs = [
-		{ code: '<slot name="content"/>', description: 'Display content' },
-		{ code: '<slot name="author"/>', description: "Display author's name" }
+		{ code: '<slot name="content">', description: 'Display content' },
+		{ code: '<slot name="author">', description: "Display author's name" }
 	];
 </script>
 
@@ -60,7 +60,7 @@
 	<h3 class="mb-3 mt-10 text-2xl font-bold">Slots</h3>
 	{#each slotDocs as doc}
 		<div class="my-5">
-			<span class="w-max rounded-md bg-[#27272A] px-2 py-1 font-jetbrain-mono text-sm font-bold">
+			<span class="w-max rounded-md bg-muted px-2 py-1 font-jetbrain-mono text-sm font-bold">
 				{doc.code}
 			</span>
 			<span>: {doc.description}</span>

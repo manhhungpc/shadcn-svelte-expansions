@@ -3,19 +3,60 @@
 	import TabPreviewCode from '$lib/components/common/TabPreviewCode.svelte';
 	import StepBlock from '$lib/components/customize/StepBlock.svelte';
 	import FloatingLabelUsage from './floating-label-usage.svelte';
-	import floatingLabelRawCode from './floating-label-usage.svelte?raw';
+	import floatingLabelRawCode from '$lib/components/customize/FloatingLabelInput.svelte?raw';
+	import floatingLabelUsageRaw from './floating-label-usage.svelte?raw';
 	import { Badge } from '$lib/components/ui/badge/index.js';
 	import { Highlight } from 'svelte-highlight';
 	import bash from 'svelte-highlight/languages/bash';
 	import shadcnSvelteLogoSvg from '$assets/shadcn-svelte-logo.svg';
+	import PropsDisplay from '$lib/components/common/PropsDisplay.svelte';
 
 	const references = [
 		{ label: 'shadcn-svelte Input', url: 'https://www.shadcn-svelte.com/docs/components/input' },
 		{ label: 'shadcn-svelte Label', url: 'https://www.shadcn-svelte.com/docs/components/label' }
 	];
+
+	const componentProps = [
+		{
+			name: 'id',
+			type: 'string',
+			default: '-',
+			description: 'The unique identifier for the input element.'
+		},
+		{
+			name: 'type',
+			type: 'InputTypes',
+			default: "'text'",
+			description: 'Defines the type of the input (e.g., text, password, etc.).'
+		},
+		{
+			name: 'label',
+			type: 'string',
+			default: "'Floating label'",
+			description: 'The label that will be displayed for the input field.'
+		},
+		{
+			name: 'inputClass',
+			type: 'string',
+			default: "'w-72'",
+			description: 'Additional classes to style the input element.'
+		},
+		{
+			name: 'labelClass',
+			type: 'string',
+			default: '-',
+			description: 'Additional classes to style the label element.'
+		},
+		{
+			name: 'bind:value',
+			type: 'string',
+			default: '-',
+			description: 'The value bound to the input element.'
+		}
+	];
 </script>
 
-<div>
+<div class="mb-20">
 	<h1 class="mb-5 text-4xl">Floating Label</h1>
 	<h3 class="text-2xl">
 		A label tag which floats just above the input field when it is being focused or already has
@@ -37,7 +78,7 @@
 		{/each}
 	</div>
 
-	<TabPreviewCode rawCode={floatingLabelRawCode}>
+	<TabPreviewCode rawCode={floatingLabelUsageRaw}>
 		<FloatingLabelUsage />
 	</TabPreviewCode>
 
@@ -59,4 +100,7 @@
 			<div slot="label">Adjust the import to match your project</div>
 		</StepBlock>
 	</div>
+
+	<h3 class="mb-3 mt-10 text-2xl font-bold">Props</h3>
+	<PropsDisplay data={componentProps} />
 </div>
