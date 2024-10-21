@@ -11,7 +11,9 @@
 		<Tabs.Trigger value="usage">Usage</Tabs.Trigger>
 	</Tabs.List>
 	<Tabs.Content value="preview">
-		<slot />
+		<div class="flex items-center justify-center rounded-lg border-2 border-primary/40 py-16">
+			<slot />
+		</div>
 	</Tabs.Content>
 	<Tabs.Content value="usage">
 		<HighlightCode {rawCode} />
