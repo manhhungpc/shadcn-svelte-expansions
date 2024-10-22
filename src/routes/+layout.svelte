@@ -10,7 +10,9 @@
 </svelte:head>
 
 <ModeWatcher />
-<div class="mx-0 mt-4 flex justify-between border-b border-b-stone-500 px-6 py-1">
+<div
+	class="sticky top-0 mx-0 flex items-center justify-between border-b border-b-stone-500 bg-background px-6 py-3 shadow-md dark:shadow-primary-foreground"
+>
 	<a href="/" class="flex flex-row items-start gap-2">
 		<img src={logoSvg} alt="logo" height="24" width="24" />
 		<span class="text-lg font-bold">shadcn-svelte-expansions</span>
@@ -25,7 +27,7 @@
 		</Button>
 	</div>
 </div>
-<div class="mx-20 mt-3">
+<div class="mx-20 mt-8">
 	<slot />
 </div>
 

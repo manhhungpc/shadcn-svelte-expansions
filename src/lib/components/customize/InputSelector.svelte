@@ -19,8 +19,8 @@
 		[key: string]: string | boolean | undefined;
 	}
 
-	export let values: Option[] = [];
 	export let options: Option[];
+	export let values: Option[] = [];
 	export let placeholder: string = 'Select options';
 	/** Loading component. */
 	export let loadingIndicator: HTMLElement | null = null;
@@ -42,28 +42,27 @@
 	// export let className: string = '';
 	// export let badgeClassName: string = '';
 	// export let selectFirstItem: boolean = true;
-	// export let creatable: boolean = false;
+	export let creatable: boolean = false;
 	// export let commandProps: any = {};
 	// export let inputProps: any = {};
 	// export let hideClearAllButton: boolean = false;
 
 	let displayOptions: Option[] = options;
 	let inputValue = '';
-	let selectedValues: Option[] = [];
 	let touchedInput = false;
 	let open = false;
 
 	function removeSelection(value: string) {
-		selectedValues = selectedValues.filter((selectVal) => selectVal.value != value);
+		values = values.filter((selectVal) => selectVal.value != value);
 		displayOptions = options.filter(
 			(item) => item.value === value || displayOptions.find((option) => option.value === item.value)
 		);
 	}
 
-	function onClickItem(data: Option) {
-		if (data.disable) return;
-		selectedValues = [...selectedValues, data];
-		displayOptions = displayOptions.filter((item) => item.value != data.value);
+	function onClickItem(item: Option) {
+		if (item.disable) return;
+		values = [...values, item];
+		displayOptions = displayOptions.filter((option) => option.value != item.value);
 	}
 
 	$: filteredOptions =
@@ -85,10 +84,10 @@
 		<div
 			class={cn(
 				'relative my-1 flex items-center rounded-md border border-input bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50',
-				{ 'px-2': selectedValues.length > 0 }
+				{ 'px-2': values.length > 0 }
 			)}
 		>
-			{#each selectedValues as selected}
+			{#each values as selected}
 				<Badge class="mr-1 !h-6">
 					{selected.label}
 					<button class="ml-1 hover:text-red-500" on:click={() => removeSelection(selected.value)}>
@@ -98,7 +97,7 @@
 			{/each}
 			<Combobox.Input
 				class={cn('h-10 w-full rounded-md px-3 py-2 focus:outline-none', {
-					'px-1': selectedValues.length > 0
+					'px-1': values.length > 0
 				})}
 				{placeholder}
 				value=""

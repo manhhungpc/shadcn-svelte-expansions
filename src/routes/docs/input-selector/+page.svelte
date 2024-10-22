@@ -1,36 +1,36 @@
 <script lang="ts">
-	import InputSelector from '$lib/components/customize/InputSelector.svelte';
+	import { Badge } from '$lib/components/ui/badge/index.js';
+	import shadcnSvelteLogoSvg from '$assets/shadcn-svelte-logo.svg';
+	import inputSelectorUsageRaw from './input-selector-usage.svelte?raw';
+	import InputSelectorUsage from './input-selector-usage.svelte';
+	import TabPreviewCode from '$lib/components/common/TabPreviewCode.svelte';
 
-	interface Option {
-		value: string;
-		label: string;
-		disable?: boolean;
-		/** fixed option that can't be removed. */
-		fixed?: boolean;
-		/** Group the options by providing key. */
-		[key: string]: string | boolean | undefined;
-	}
-	const OPTIONS: Option[] = [
-		{ label: 'nextjs', value: 'nextjs' },
-		{ label: 'React', value: 'react', disable: true },
-		{ label: 'Remix', value: 'remix' },
-		{ label: 'Vite', value: 'vite' },
-		{ label: 'Nuxt', value: 'nuxt' },
-		{ label: 'Vue', value: 'vue' },
-		{ label: 'Svelte', value: 'svelte' },
-		{ label: 'Angular', value: 'angular' },
-		{ label: 'Ember', value: 'ember', disable: true },
-		{ label: 'Gatsby', value: 'gatsby', disable: true },
-		{ label: 'Astro', value: 'astro' },
-		{ label: 'Bitui', value: 'bitui' },
-		{ label: 'Shadcn', value: 'shadcn' }
+	const references = [
+		{ label: 'shadcn-svelte Input', url: 'https://www.shadcn-svelte.com/docs/components/input' },
+		{ label: 'shadcn-svelte Label', url: 'https://www.shadcn-svelte.com/docs/components/label' }
 	];
 </script>
 
-<div class="my-10">
-	<InputSelector
-		options={OPTIONS}
-		placeholder="Type something that does not exist in dropdowns..."
-		creatable
-	/>
+<div class="mb-20">
+	<h1 class="mb-5 text-4xl">Floating Label</h1>
+	<h3 class="text-2xl">Allows input of multiple values.</h3>
+
+	<div class="mt-2">
+		{#each references as ref}
+			<Badge href={ref.url} class="mr-2">
+				<img
+					src={shadcnSvelteLogoSvg}
+					alt="Shadcn svelte logo"
+					height="16"
+					width="16"
+					class="mr-1"
+				/>
+				{ref.label}
+			</Badge>
+		{/each}
+	</div>
+
+	<TabPreviewCode rawCode={inputSelectorUsageRaw}>
+		<InputSelectorUsage />
+	</TabPreviewCode>
 </div>
