@@ -83,29 +83,37 @@
 	>
 		<div
 			class={cn(
-				'relative my-1 flex items-center rounded-md border border-input bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50',
-				{ 'px-2': values.length > 0 }
+				'relative my-1 flex flex-wrap items-center rounded-md border border-input bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50',
+				{ 'pl-2': values.length > 0 }
 			)}
 		>
-			{#each values as selected}
-				<Badge class="mr-1 !h-6">
-					{selected.label}
-					<button class="ml-1 hover:text-red-500" on:click={() => removeSelection(selected.value)}>
-						<X size={16} />
-					</button>
-				</Badge>
-			{/each}
+			<div class="h-full">
+				{#each values as selected}
+					<Badge class="mr-1 !h-6">
+						{selected.label}
+						<button
+							class="ml-1 hover:text-red-500"
+							on:click={() => removeSelection(selected.value)}
+						>
+							<X size={16} />
+						</button>
+					</Badge>
+				{/each}
+			</div>
 			<Combobox.Input
-				class={cn('h-10 w-full rounded-md px-3 py-2 focus:outline-none', {
-					'px-1': values.length > 0
-				})}
+				class={cn(
+					'h-10 w-2/3 rounded-md bg-background px-3 py-2 placeholder:truncate focus:outline-none',
+					{
+						'pl-1': values.length > 0
+					}
+				)}
 				{placeholder}
 				value=""
 			/>
 		</div>
 
 		<Combobox.Content
-			class="!left-0 mb-5 !w-full rounded-xl border bg-background px-1 py-3 shadow-popover outline-none "
+			class="!left-0 mb-5 h-[30vh] !w-full overflow-auto rounded-xl border bg-background px-1 py-3 shadow-popover outline-none"
 			sideOffset={8}
 		>
 			{#each filteredOptions as option (option.value)}

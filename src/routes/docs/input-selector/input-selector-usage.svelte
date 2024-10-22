@@ -18,7 +18,7 @@
 	];
 </script>
 
-<div class="w-1/3">
+<div class="w-2/5">
 	<InputSelector
 		options={OPTIONS}
 		placeholder="Type something that does not exist in dropdowns..."
