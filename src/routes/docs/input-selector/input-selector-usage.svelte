@@ -14,14 +14,13 @@
 		{ label: 'Gatsby', value: 'gatsby', disable: true },
 		{ label: 'Astro', value: 'astro' },
 		{ label: 'Bitui', value: 'bitui' },
-		{ label: 'Shadcn', value: 'shadcn' }
+		{ label: 'Shadcn', value: 'shadcn' },
+		{ label: 'Solid', value: 'solid' },
+		{ label: 'Deno', value: 'deno' },
+		{ label: 'Bun', value: 'bun' }
 	];
 </script>
 
 <div class="w-2/5">
-	<InputSelector
-		options={OPTIONS}
-		placeholder="Type something that does not exist in dropdowns..."
-		creatable
-	/>
+	<InputSelector options={OPTIONS} placeholder="Select favourite JS framework..." creatable />
 </div>

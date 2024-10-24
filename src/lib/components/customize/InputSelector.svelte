@@ -1,5 +1,4 @@
 <script lang="ts">
-	import * as Command from '$lib/components/ui/command/index.js';
 	import { Combobox } from 'bits-ui';
 	import { Badge } from '$lib/components/ui/badge/index.js';
 	import { createEventDispatcher } from 'svelte';
@@ -22,35 +21,13 @@
 	export let options: Option[];
 	export let values: Option[] = [];
 	export let placeholder: string = 'Select options';
-	/** Loading component. */
-	export let loadingIndicator: HTMLElement | null = null;
-	/** Debounce time for async search. Only work with `on:search`. */
-	export let delay: number = 500;
-	/**
-	 * Only work with `onSearch` prop. Trigger search when `onFocus`.
-	 * For example, when user click on the input, it will trigger the search to get initial options.
-	 **/
-	export let triggerSearchOnFocus: boolean = false;
-	export let onSearch: (value: string) => Promise<Option[]> = async () => [];
-	export let onSearchSync: (value: string) => Option[] = () => [];
-	export let onChange: (options: Option[]) => void = () => {};
-	// export let maxSelected: number | null = null;
-	// export let onMaxSelected: (maxLimit: number) => void = () => {};
-	// export let hidePlaceholderWhenSelected: boolean = false;
 	export let disabled: boolean = false;
-	// export let groupBy: string | null = null;
-	// export let className: string = '';
-	// export let badgeClassName: string = '';
-	// export let selectFirstItem: boolean = true;
 	export let creatable: boolean = false;
-	// export let commandProps: any = {};
-	// export let inputProps: any = {};
-	// export let hideClearAllButton: boolean = false;
 
 	let displayOptions: Option[] = options;
 	let inputValue = '';
-	let touchedInput = false;
-	let open = false;
+	let touchedInput = false,
+		open = false;
 
 	function removeSelection(value: string) {
 		values = values.filter((selectVal) => selectVal.value != value);
@@ -65,10 +42,17 @@
 		displayOptions = displayOptions.filter((option) => option.value != item.value);
 	}
 
+	function handleFocusInput() {
+		const comboboxInput = document.querySelector('[data-combobox-input]') as HTMLElement;
+		comboboxInput.focus();
+		open = true;
+	}
+
 	$: filteredOptions =
 		inputValue && touchedInput
 			? displayOptions.filter((item) => item.value.includes(inputValue.toLowerCase()))
 			: displayOptions;
+	$: inputWidth = placeholder.length * 8;
 </script>
 
 <div class="relative">
@@ -76,16 +60,21 @@
 		items={filteredOptions}
 		bind:touchedInput
 		bind:inputValue
+		bind:open
 		preventScroll={false}
 		{disabled}
 		scrollAlignment="center"
 		portal={null}
 	>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div
 			class={cn(
-				'relative my-1 flex flex-wrap items-center rounded-md border border-input bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50',
+				'relative flex flex-wrap items-center rounded-md border border-input bg-background py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-1 hover:cursor-text disabled:cursor-not-allowed disabled:opacity-50',
 				{ 'pl-2': values.length > 0 }
 			)}
+			on:click={handleFocusInput}
+			tabindex="0"
+			role="button"
 		>
 			<div class="h-full">
 				{#each values as selected}
@@ -102,18 +91,19 @@
 			</div>
 			<Combobox.Input
 				class={cn(
-					'h-10 w-2/3 rounded-md bg-background px-3 py-2 placeholder:truncate focus:outline-none',
+					'h-6 rounded-md bg-background px-3 py-2 placeholder:truncate focus:outline-none',
 					{
 						'pl-1': values.length > 0
 					}
 				)}
+				style="width: {inputWidth}px;"
 				{placeholder}
 				value=""
 			/>
 		</div>
 
 		<Combobox.Content
-			class="!left-0 mb-5 h-[30vh] !w-full overflow-auto rounded-xl border bg-background px-1 py-3 shadow-popover outline-none"
+			class="!left-0 mb-5 max-h-[40vh] !w-full overflow-auto rounded-xl border bg-background px-1 py-3 shadow-popover outline-none"
 			sideOffset={8}
 		>
 			{#each filteredOptions as option (option.value)}
