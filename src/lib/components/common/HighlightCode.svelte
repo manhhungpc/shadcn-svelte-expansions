@@ -10,6 +10,6 @@
 	{@html atomOneDark}
 </svelte:head>
 
-<div class="max-h-[80vh] overflow-auto">
+<div class="max-h-[60vh] overflow-auto">
 	<HighlightSvelte code={rawCode} />
 </div>

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Badge } from '$lib/components/ui/badge/index.js';
 	import shadcnSvelteLogoSvg from '$assets/shadcn-svelte-logo.svg';
-	import inputSelectorUsageRaw from './input-selector-usage.svelte?raw';
-	import InputSelectorUsage from './input-selector-usage.svelte';
+	import inputSelectorUsageRaw from './input-selector-general.svelte?raw';
+	import InputSelectorUsage from './input-selector-general.svelte';
 	import componentRawCode from '$lib/components/customize/InputSelector.svelte?raw';
 	import TabPreviewCode from '$lib/components/common/TabPreviewCode.svelte';
 	import HighlightCode from '$lib/components/common/HighlightCode.svelte';
@@ -10,11 +10,15 @@
 	import bash from 'svelte-highlight/languages/bash';
 	import { Highlight } from 'svelte-highlight';
 	import { ExternalLink } from 'lucide-svelte';
+	import PropsDisplay from '$lib/components/common/PropsDisplay.svelte';
+	import Examples from './examples.svelte';
 
 	const references = [
 		{ label: 'shadcn-svelte Input', url: 'https://www.shadcn-svelte.com/docs/components/input' },
 		{ label: 'shadcn-svelte Label', url: 'https://www.shadcn-svelte.com/docs/components/label' }
 	];
+
+	const propsDoc = [];
 </script>
 
 <div class="mb-20">
@@ -69,4 +73,11 @@
 			<div slot="label">Adjust the import to match your project</div>
 		</StepBlock>
 	</div>
+
+	<h3 class="mb-3 mt-10 text-2xl font-bold">Examples</h3>
+	<hr />
+	<Examples />
+
+	<h3 class="mb-3 mt-10 text-2xl font-bold">Props</h3>
+	<!-- <PropsDisplay data={propsDoc} /> -->
 </div>

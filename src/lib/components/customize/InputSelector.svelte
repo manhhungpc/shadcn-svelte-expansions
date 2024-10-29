@@ -1,11 +1,8 @@
 <script lang="ts">
 	import { Combobox } from 'bits-ui';
 	import { Badge } from '$lib/components/ui/badge/index.js';
-	import { createEventDispatcher } from 'svelte';
 	import { cn } from '$lib/utils.js';
 	import { X } from 'lucide-svelte';
-
-	const dispatch = createEventDispatcher();
 
 	interface Option {
 		value: string;
@@ -18,6 +15,7 @@
 		[key: string]: string | boolean | undefined;
 	}
 
+	export let id = 'input-selector-default';
 	export let options: Option[];
 	export let values: Option[] = [];
 	export let placeholder: string = 'Select options';
@@ -43,8 +41,8 @@
 	}
 
 	function handleFocusInput() {
-		const comboboxInput = document.querySelector('[data-combobox-input]') as HTMLElement;
-		comboboxInput.focus();
+		const comboboxInput = document.getElementById(id);
+		comboboxInput?.focus();
 		open = true;
 	}
 
@@ -70,7 +68,8 @@
 		<div
 			class={cn(
 				'relative flex flex-wrap items-center rounded-md border border-input bg-background py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-1 hover:cursor-text disabled:cursor-not-allowed disabled:opacity-50',
-				{ 'pl-2': values.length > 0 }
+				{ 'pl-2': values.length > 0 },
+				{ 'pointer-events-none': disabled }
 			)}
 			on:click={handleFocusInput}
 			tabindex="0"
@@ -98,12 +97,13 @@
 				)}
 				style="width: {inputWidth}px;"
 				{placeholder}
+				{id}
 				value=""
 			/>
 		</div>
 
 		<Combobox.Content
-			class="!left-0 mb-5 max-h-[40vh] !w-full overflow-auto rounded-xl border bg-background px-1 py-3 shadow-popover outline-none"
+			class="!left-0 !top-12 mb-5 max-h-[40vh] !w-full overflow-auto rounded-xl border bg-background px-1 py-3 shadow-popover outline-none"
 			sideOffset={8}
 		>
 			{#each filteredOptions as option (option.value)}
@@ -125,6 +125,6 @@
 				</slot>
 			{/each}
 		</Combobox.Content>
-		<Combobox.HiddenInput name="favoriteFruit" />
+		<Combobox.HiddenInput />
 	</Combobox.Root>
 </div>

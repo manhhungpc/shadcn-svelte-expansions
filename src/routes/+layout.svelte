@@ -35,11 +35,21 @@
 	@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 	:global(::-webkit-scrollbar) {
 		width: 8px;
-		background-color: #1f1f1f;
+		height: 8px;
+		background-color: #cacaca;
+	}
+	:global(::-webkit-scrollbar-thumb) {
+		background-color: #818181;
+		border-radius: 4px;
 	}
 
-	:global(::-webkit-scrollbar-thumb) {
-		background-color: #444;
+	:global(.dark ::-webkit-scrollbar) {
+		width: 8px;
+		height: 8px;
+		background-color: #525252;
+	}
+	:global(.dark ::-webkit-scrollbar-thumb) {
+		background-color: #cacaca;
 		border-radius: 4px;
 	}
 </style>
