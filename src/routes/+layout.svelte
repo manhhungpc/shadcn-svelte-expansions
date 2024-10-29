@@ -10,7 +10,9 @@
 </svelte:head>
 
 <ModeWatcher />
-<div class="mx-0 mt-4 flex justify-between border-b border-b-stone-500 px-6 py-1">
+<div
+	class="sticky top-0 mx-0 flex items-center justify-between border-b border-b-stone-500 bg-background px-6 py-3 shadow-md dark:shadow-primary-foreground"
+>
 	<a href="/" class="flex flex-row items-start gap-2">
 		<img src={logoSvg} alt="logo" height="24" width="24" />
 		<span class="text-lg font-bold">shadcn-svelte-expansions</span>
@@ -25,7 +27,7 @@
 		</Button>
 	</div>
 </div>
-<div class="mx-20 mt-3">
+<div class="mx-20 mt-8">
 	<slot />
 </div>
 
@@ -33,11 +35,21 @@
 	@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 	:global(::-webkit-scrollbar) {
 		width: 8px;
-		background-color: #1f1f1f;
+		height: 8px;
+		background-color: #cacaca;
+	}
+	:global(::-webkit-scrollbar-thumb) {
+		background-color: #818181;
+		border-radius: 4px;
 	}
 
-	:global(::-webkit-scrollbar-thumb) {
-		background-color: #444;
+	:global(.dark ::-webkit-scrollbar) {
+		width: 8px;
+		height: 8px;
+		background-color: #525252;
+	}
+	:global(.dark ::-webkit-scrollbar-thumb) {
+		background-color: #cacaca;
 		border-radius: 4px;
 	}
 </style>

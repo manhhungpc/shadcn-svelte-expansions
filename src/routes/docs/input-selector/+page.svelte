@@ -1,36 +1,83 @@
 <script lang="ts">
-	import InputSelector from '$lib/components/customize/InputSelector.svelte';
+	import { Badge } from '$lib/components/ui/badge/index.js';
+	import shadcnSvelteLogoSvg from '$assets/shadcn-svelte-logo.svg';
+	import inputSelectorUsageRaw from './input-selector-general.svelte?raw';
+	import InputSelectorUsage from './input-selector-general.svelte';
+	import componentRawCode from '$lib/components/customize/InputSelector.svelte?raw';
+	import TabPreviewCode from '$lib/components/common/TabPreviewCode.svelte';
+	import HighlightCode from '$lib/components/common/HighlightCode.svelte';
+	import StepBlock from '$lib/components/customize/StepBlock.svelte';
+	import bash from 'svelte-highlight/languages/bash';
+	import { Highlight } from 'svelte-highlight';
+	import { ExternalLink } from 'lucide-svelte';
+	import PropsDisplay from '$lib/components/common/PropsDisplay.svelte';
+	import Examples from './examples.svelte';
 
-	interface Option {
-		value: string;
-		label: string;
-		disable?: boolean;
-		/** fixed option that can't be removed. */
-		fixed?: boolean;
-		/** Group the options by providing key. */
-		[key: string]: string | boolean | undefined;
-	}
-	const OPTIONS: Option[] = [
-		{ label: 'nextjs', value: 'nextjs' },
-		{ label: 'React', value: 'react', disable: true },
-		{ label: 'Remix', value: 'remix' },
-		{ label: 'Vite', value: 'vite' },
-		{ label: 'Nuxt', value: 'nuxt' },
-		{ label: 'Vue', value: 'vue' },
-		{ label: 'Svelte', value: 'svelte' },
-		{ label: 'Angular', value: 'angular' },
-		{ label: 'Ember', value: 'ember', disable: true },
-		{ label: 'Gatsby', value: 'gatsby', disable: true },
-		{ label: 'Astro', value: 'astro' },
-		{ label: 'Bitui', value: 'bitui' },
-		{ label: 'Shadcn', value: 'shadcn' }
+	const references = [
+		{ label: 'shadcn-svelte Input', url: 'https://www.shadcn-svelte.com/docs/components/input' },
+		{ label: 'shadcn-svelte Label', url: 'https://www.shadcn-svelte.com/docs/components/label' }
 	];
+
+	const propsDoc = [];
 </script>
 
-<div class="my-10">
-	<InputSelector
-		options={OPTIONS}
-		placeholder="Type something that does not exist in dropdowns..."
-		creatable
-	/>
+<div class="mb-20">
+	<h1 class="mb-5 text-4xl">Input Selector</h1>
+	<h3 class="text-2xl">Allows input of multiple values.</h3>
+
+	<div class="mt-2">
+		{#each references as ref}
+			<Badge href={ref.url} class="mr-2">
+				<img
+					src={shadcnSvelteLogoSvg}
+					alt="Shadcn svelte logo"
+					height="16"
+					width="16"
+					class="mr-1"
+				/>
+				{ref.label}
+			</Badge>
+		{/each}
+	</div>
+
+	<TabPreviewCode rawCode={inputSelectorUsageRaw}>
+		<InputSelectorUsage />
+	</TabPreviewCode>
+
+	<h3 class="mt-10 text-2xl font-bold">Installation</h3>
+	<div class="my-3">
+		<StepBlock step={1}>
+			<div slot="label">Install necessary package if you haven't</div>
+			<div slot="content">
+				<div class="text-lg">
+					This component using Combobox Input from Bits-UI.
+					<a
+						href="https://www.bits-ui.com/docs/getting-started"
+						class="flex items-center gap-1 text-[#EA4F27] hover:underline"
+					>
+						Install it
+						<ExternalLink size={18} color="#EA4F27" />
+					</a>
+				</div>
+				<div class="my-2 text-lg">Then install necessary components from shadcn-svelte</div>
+				<Highlight language={bash} code="npx shadcn-svelte@latest add input label" />
+			</div>
+		</StepBlock>
+		<StepBlock step={2}>
+			<div slot="label">Copy this code</div>
+			<div slot="content">
+				<HighlightCode rawCode={componentRawCode} />
+			</div>
+		</StepBlock>
+		<StepBlock step={3}>
+			<div slot="label">Adjust the import to match your project</div>
+		</StepBlock>
+	</div>
+
+	<h3 class="mb-3 mt-10 text-2xl font-bold">Examples</h3>
+	<hr />
+	<Examples />
+
+	<h3 class="mb-3 mt-10 text-2xl font-bold">Props</h3>
+	<!-- <PropsDisplay data={propsDoc} /> -->
 </div>

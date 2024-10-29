@@ -1,12 +1,8 @@
 <script lang="ts">
-	import * as Command from '$lib/components/ui/command/index.js';
 	import { Combobox } from 'bits-ui';
 	import { Badge } from '$lib/components/ui/badge/index.js';
-	import { createEventDispatcher } from 'svelte';
 	import { cn } from '$lib/utils.js';
 	import { X } from 'lucide-svelte';
-
-	const dispatch = createEventDispatcher();
 
 	interface Option {
 		value: string;
@@ -19,57 +15,42 @@
 		[key: string]: string | boolean | undefined;
 	}
 
-	export let values: Option[] = [];
+	export let id = 'input-selector-default';
 	export let options: Option[];
+	export let values: Option[] = [];
 	export let placeholder: string = 'Select options';
-	/** Loading component. */
-	export let loadingIndicator: HTMLElement | null = null;
-	/** Debounce time for async search. Only work with `on:search`. */
-	export let delay: number = 500;
-	/**
-	 * Only work with `onSearch` prop. Trigger search when `onFocus`.
-	 * For example, when user click on the input, it will trigger the search to get initial options.
-	 **/
-	export let triggerSearchOnFocus: boolean = false;
-	export let onSearch: (value: string) => Promise<Option[]> = async () => [];
-	export let onSearchSync: (value: string) => Option[] = () => [];
-	export let onChange: (options: Option[]) => void = () => {};
-	// export let maxSelected: number | null = null;
-	// export let onMaxSelected: (maxLimit: number) => void = () => {};
-	// export let hidePlaceholderWhenSelected: boolean = false;
 	export let disabled: boolean = false;
-	// export let groupBy: string | null = null;
-	// export let className: string = '';
-	// export let badgeClassName: string = '';
-	// export let selectFirstItem: boolean = true;
-	// export let creatable: boolean = false;
-	// export let commandProps: any = {};
-	// export let inputProps: any = {};
-	// export let hideClearAllButton: boolean = false;
+	export let creatable: boolean = false;
 
 	let displayOptions: Option[] = options;
 	let inputValue = '';
-	let selectedValues: Option[] = [];
-	let touchedInput = false;
-	let open = false;
+	let touchedInput = false,
+		open = false;
 
 	function removeSelection(value: string) {
-		selectedValues = selectedValues.filter((selectVal) => selectVal.value != value);
+		values = values.filter((selectVal) => selectVal.value != value);
 		displayOptions = options.filter(
 			(item) => item.value === value || displayOptions.find((option) => option.value === item.value)
 		);
 	}
 
-	function onClickItem(data: Option) {
-		if (data.disable) return;
-		selectedValues = [...selectedValues, data];
-		displayOptions = displayOptions.filter((item) => item.value != data.value);
+	function onClickItem(item: Option) {
+		if (item.disable) return;
+		values = [...values, item];
+		displayOptions = displayOptions.filter((option) => option.value != item.value);
+	}
+
+	function handleFocusInput() {
+		const comboboxInput = document.getElementById(id);
+		comboboxInput?.focus();
+		open = true;
 	}
 
 	$: filteredOptions =
 		inputValue && touchedInput
 			? displayOptions.filter((item) => item.value.includes(inputValue.toLowerCase()))
 			: displayOptions;
+	$: inputWidth = placeholder.length * 8;
 </script>
 
 <div class="relative">
@@ -77,36 +58,52 @@
 		items={filteredOptions}
 		bind:touchedInput
 		bind:inputValue
+		bind:open
 		preventScroll={false}
 		{disabled}
 		scrollAlignment="center"
 		portal={null}
 	>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div
 			class={cn(
-				'relative my-1 flex items-center rounded-md border border-input bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50',
-				{ 'px-2': selectedValues.length > 0 }
+				'relative flex flex-wrap items-center rounded-md border border-input bg-background py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-1 hover:cursor-text disabled:cursor-not-allowed disabled:opacity-50',
+				{ 'pl-2': values.length > 0 },
+				{ 'pointer-events-none': disabled }
 			)}
+			on:click={handleFocusInput}
+			tabindex="0"
+			role="button"
 		>
-			{#each selectedValues as selected}
-				<Badge class="mr-1 !h-6">
-					{selected.label}
-					<button class="ml-1 hover:text-red-500" on:click={() => removeSelection(selected.value)}>
-						<X size={16} />
-					</button>
-				</Badge>
-			{/each}
+			<div class="h-full">
+				{#each values as selected}
+					<Badge class="mr-1 !h-6">
+						{selected.label}
+						<button
+							class="ml-1 hover:text-red-500"
+							on:click={() => removeSelection(selected.value)}
+						>
+							<X size={16} />
+						</button>
+					</Badge>
+				{/each}
+			</div>
 			<Combobox.Input
-				class={cn('h-10 w-full rounded-md px-3 py-2 focus:outline-none', {
-					'px-1': selectedValues.length > 0
-				})}
+				class={cn(
+					'h-6 rounded-md bg-background px-3 py-2 placeholder:truncate focus:outline-none',
+					{
+						'pl-1': values.length > 0
+					}
+				)}
+				style="width: {inputWidth}px;"
 				{placeholder}
+				{id}
 				value=""
 			/>
 		</div>
 
 		<Combobox.Content
-			class="!left-0 mb-5 !w-full rounded-xl border bg-background px-1 py-3 shadow-popover outline-none "
+			class="!left-0 !top-12 mb-5 max-h-[40vh] !w-full overflow-auto rounded-xl border bg-background px-1 py-3 shadow-popover outline-none"
 			sideOffset={8}
 		>
 			{#each filteredOptions as option (option.value)}
@@ -128,6 +125,6 @@
 				</slot>
 			{/each}
 		</Combobox.Content>
-		<Combobox.HiddenInput name="favoriteFruit" />
+		<Combobox.HiddenInput />
 	</Combobox.Root>
 </div>
