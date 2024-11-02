@@ -31,7 +31,7 @@
 					href={component.route}
 					class={cn(
 						'indent-5 hover:text-[#EA4F27] hover:underline',
-						$page.url.pathname === component.route ? 'text-[#EA4F27]' : ''
+						$page.url.pathname.includes(component.route) ? 'text-[#EA4F27]' : ''
 					)}
 				>
 					{component.label}
