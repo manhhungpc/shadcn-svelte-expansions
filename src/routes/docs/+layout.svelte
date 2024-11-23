@@ -5,8 +5,8 @@
 		{ label: 'Blockquote', route: '/docs/blockquote' },
 		{ label: 'Input Selector', route: '/docs/input-selector' },
 		{ label: 'File Drop', route: '/docs/file-drop' },
-		{ label: 'Anchor Header', route: '/docs/anchor-header' },
 		{ label: 'Floating Label', route: '/docs/floating-label' }
+		// { label: 'Anchor Header', route: '/docs/anchor-header' },
 	];
 </script>
 

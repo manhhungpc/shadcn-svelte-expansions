@@ -7,7 +7,19 @@
 	import HighlightCode from '$lib/components/common/HighlightCode.svelte';
 	import PropsDisplay from '$lib/components/common/PropsDisplay.svelte';
 
-	const data: PropDisplay[] = [];
+	const data: PropDisplay[] = [
+		{
+			name: 'files',
+			type: 'FileList | undefined',
+			default: 'undefined',
+			description: 'Bind file data'
+		}
+	];
+	let slotDocs = [
+		{ code: '<slot name="title">', description: 'Display title or icon of drop zone' },
+		{ code: '<slot name="content">', description: 'Message for content of drop zone' },
+		{ code: '<slot name="metadata">', description: 'Description for metadata of accepted file' }
+	];
 </script>
 
 <div class="mb-20">
@@ -39,4 +51,14 @@
 
 	<h3 class="mb-3 mt-10 text-2xl font-bold">Props</h3>
 	<PropsDisplay {data} />
+
+	<h3 class="mb-3 mt-10 text-2xl font-bold">Slots</h3>
+	{#each slotDocs as doc}
+		<div class="my-5">
+			<span class="w-max rounded-md bg-muted px-2 py-1 font-jetbrain-mono text-sm font-bold">
+				{doc.code}
+			</span>
+			<span>: {doc.description}</span>
+		</div>
+	{/each}
 </div>
